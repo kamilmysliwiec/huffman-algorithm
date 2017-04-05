@@ -7,38 +7,35 @@ HuffmanTree::HuffmanTree(const string& data)
 
 void HuffmanTree::init(const string& data)
 {
-	const auto symbols_dictionary = create_dictionary(data);
-	const auto symbols_vec = move_to_vector(*symbols_dictionary);
+	auto symbols_dictionary = create_dictionary(data);
+	auto symbols_vec = move_to_vector(symbols_dictionary);
 
-	create_binary_tree(*symbols_vec);
-	delete symbols_vec;
-
-	create_hash_table(*symbols_dictionary);
-	delete symbols_dictionary;
+	create_binary_tree(symbols_vec);
+	create_hash_table(symbols_dictionary);
 }
 
-map<char, SymbolPtr>* HuffmanTree::create_dictionary(const string& data) const
+map<char, SymbolPtr> HuffmanTree::create_dictionary(const string& data) const
 {
-	auto symbols_dict = new map<char, SymbolPtr>;
+	map<char, SymbolPtr> symbols_dict;
 	for (const auto& c: data)
 	{
-		auto pos = symbols_dict->find(c);
-		if (pos != symbols_dict->end())
+		auto pos = symbols_dict.find(c);
+		if (pos != symbols_dict.end())
 		{
 			++(*pos->second);
 			continue;
 		}
-		symbols_dict->insert(make_pair(c, static_pointer_cast<Symbol>(make_shared<Symbol>(c))));
+		symbols_dict.insert(make_pair(c, static_pointer_cast<Symbol>(make_shared<Symbol>(c))));
 	}
 	return symbols_dict;
 }
 
-vector<SymbolPtr>* HuffmanTree::move_to_vector(map<char, SymbolPtr>& dictionary) const
+vector<SymbolPtr> HuffmanTree::move_to_vector(map<char, SymbolPtr>& dictionary) const
 {
-	auto symbols = new vector<SymbolPtr>;
-	symbols->reserve(dictionary.size());
+	vector<SymbolPtr> symbols;
+	symbols.reserve(dictionary.size());
 	for_each(dictionary.begin(), dictionary.end(), [&symbols](pair<const char, SymbolPtr>& symbol) {
-		symbols->push_back(move(symbol.second));
+		symbols.push_back(move(symbol.second));
 	});
 	return symbols;
 }

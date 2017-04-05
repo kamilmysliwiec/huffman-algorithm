@@ -25,8 +25,8 @@ class HuffmanTree
 		void create_binary_tree(vector<SymbolPtr>&);
 		void create_hash_table(map<char, SymbolPtr>);
 
-		map<char, SymbolPtr>* create_dictionary(const string&) const;
-		vector<SymbolPtr>* move_to_vector(map<char, SymbolPtr>&) const;
+		map<char, SymbolPtr> create_dictionary(const string&) const;
+		vector<SymbolPtr> move_to_vector(map<char, SymbolPtr>&) const;
 		string find_path(Symbol&, const char&, bool&, const string& = "");
 		char find_symbol(Symbol&, const char * const, unsigned long&) const;
 
